@@ -1,18 +1,19 @@
 import paho.mqtt.client as mqtt
 import time
-import socket
 
 """This function (or "callback") will be executed when this client receives 
-a connection acknowledgement packet response from the server. """
+a connection acknowledgement packet response from the server. Also going to subscribe to the ping
+channel"""
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     client.subscribe("ryanhlee/ping")
     client.message_callback_add("ryanhlee/ping", on_message_from_ping)
 
+"""Default callback"""
 def on_message(client, userdata, msg):
     print("Default callback - topic: " + msg.topic + "   msg: " + str(msg.payload, "utf-8"))
 
-#Custom message callback.
+#Custom message callback for receiving ping, incrementing by 1, and publishing to pong
 def on_message_from_ping(client, userdata, message):
    print("Custom callback from Ping: "+message.payload.decode())
    newNum = int(message.payload.decode()) + 1
@@ -40,9 +41,3 @@ if __name__ == '__main__':
     """ask paho-mqtt to spawn a separate thread to handle
     incoming and outgoing mqtt messages."""
     client.loop_forever()
-
-    # while True:
-    #     #replace user with your USC username in all subscriptions
-    #     client.publish("ryanhlee/ping", 0)
-    #     print("Publishing ping")
-    #     time.sleep(1)

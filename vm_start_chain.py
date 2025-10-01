@@ -1,6 +1,5 @@
 import paho.mqtt.client as mqtt
 import time
-import socket
 
 """This function (or "callback") will be executed when this client receives 
 a connection acknowledgement packet response from the server. """
@@ -9,6 +8,7 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("ryanhlee/pong")
     client.message_callback_add("ryanhlee/pong", on_message_from_pong)
 
+    # initial start publish
     client.publish("ryanhlee/ping", 0)
     print("Publishing ping: 0")
     time.sleep(1)
@@ -16,7 +16,7 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print("Default callback - topic: " + msg.topic + "   msg: " + str(msg.payload, "utf-8"))
 
-#Custom message callback.
+#Custom message callback. Receives Pong, increments by 1, and publishes new value to ping
 def on_message_from_pong(client, userdata, message):
    print("Custom callback from Pong: "+message.payload.decode())
    newNum = int(message.payload.decode()) + 1
