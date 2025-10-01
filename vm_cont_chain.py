@@ -1,3 +1,7 @@
+# Team members: Ryan Lee
+# Github repo: https://github.com/ryanlee1235/ee250lab4
+
+
 import paho.mqtt.client as mqtt
 import time
 

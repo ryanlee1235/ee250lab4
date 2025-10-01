@@ -1,3 +1,6 @@
+# Team members: Ryan Lee
+# Github repo: https://github.com/ryanlee1235/ee250lab4
+
 """EE 250L Lab 04 Starter Code
 Run vm_sub.py in a separate terminal on your VM."""
 
@@ -19,7 +22,7 @@ if __name__ == '__main__':
     hostname = socket.gethostname()
 
     ip_address = socket.gethostbyname(hostname)
-    
+
     #create a client object
     client = mqtt.Client()
     
